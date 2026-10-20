@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<footer data-screen-label="Footer" style="position:relative;background:#fff;border-top:1px solid #E0E4EC;font-family:'Inter',sans-serif">
+<div style="max-width:1560px;margin:0 auto;padding:40px clamp(58px,7vw,132px) 28px;display:flex;flex-wrap:wrap;gap:32px clamp(40px,5vw,80px)">
+<div style="flex:1 1 260px;max-width:320px;display:flex;flex-direction:column;gap:16px;font-size:12px;line-height:1.65;color:#8B94AD">
+<a href="BgrSite.dc.html" aria-label="BGR Energy Systems home" style="display:flex;align-items:center;gap:7px;font-family:'Manrope',sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#16295B"><img src="assets/bgr-logo.png" alt="" style="display:block;width:34px;height:34px;margin-right:4px"><span style="font-weight:800">BGR</span><span style="font-weight:400">Energy Systems</span></a>
+<div>CIN L40106AP1985PLC005318<br>Registered office: E-4, Pannamgadu Industrial Estate, Ramapuram Post, Tada Mandalam, Tirupathi District, Andhra Pradesh 524401<br>Corporate office: 443 Anna Salai, Teynampet, Chennai 600018</div>
+<a href="InvestorsShareholder.dc.html#reg46" style="font-size:12px;font-weight:600;color:#43517D;transition:color 200ms" style-hover="color:#E41D26">Regulation 46(2) disclosures (SEBI LODR) →</a>
+</div>
+<div style="flex:3 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px">
+<sc-for list="{{ footerCols }}" as="col" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:7px">
+<div style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8B94AD;margin-bottom:4px">{{ col.label }}</div>
+<sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4"><a href="{{ l.href }}" style="font-size:12.5px;line-height:1.4;color:#43517D;transition:color 200ms" style-hover="color:#E41D26">{{ l.label }}</a></sc-for>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="max-width:1560px;margin:0 auto;padding:14px clamp(58px,7vw,132px) 22px;border-top:1px solid #E0E4EC;display:flex;gap:10px 20px;flex-wrap:wrap;align-items:center">
+<div style="font-size:11.5px;color:#8B94AD">© 2026 BGR Energy Systems Limited. All rights reserved.</div>
+<div style="display:flex;gap:18px;margin-left:auto;flex-wrap:wrap">
+<sc-for list="{{ legalLinks }}" as="l" hint-placeholder-count="6"><a href="{{ l.href }}" style="font-size:11.5px;color:#8B94AD;transition:color 200ms" style-hover="color:#E41D26">{{ l.label }}</a></sc-for>
+</div>
+</div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const m = a => a.map(([label, f]) => ({ label, href: f.startsWith('http') ? f : f.replace(/(#|$)/, '.dc.html$1') }));
+    return {
+      footerCols: [
+        { label: 'Who We Are', links: m([['Our Principles', 'WhoWeAre#purpose'], ['Our Story', 'OurStory'], ['Why BGR Wins', 'WhoWeAre#why-bgr-wins'], ['How We Build', 'WhoWeAre#how-we-build'], ['Leadership and Board', 'LeadershipAndBoard'], ['Track Record and EPC Capabilities', 'TrackRecord']]) },
+        { label: 'Our Businesses', links: m([['Heat Transfer Products', 'HeatTransferProducts'], ['Digital & Engineering Services', 'EngineeringServices'], ['Nuclear BOP and Conventional Island', 'Nuclear']]) },
+        { label: 'Investors', links: m([['Investor Relations home', 'Investors'], ['Financial Results', 'Investors'], ['Annual Reports', 'Investors'], ['Stock Exchange Filings', 'Investors'], ['Corporate Governance', 'Investors'], ['Investor Contact', 'Contact']]) },
+        { label: 'Company', links: m([['News and Media', 'NewsAndMedia'], ['Careers', 'Careers'], ['Contact', 'Contact'], ['Suppliers', 'Suppliers'], ['Project Partners', 'ProjectPartners'], ['Employee Portal', 'EmployeePortal']]) }],
+      legalLinks: m([['Privacy Policy', 'Privacy'], ['Terms of Use', 'Terms'], ['Cookie Preferences', 'Cookies'], ['Accessibility Statement', 'Accessibility'], ['Disclaimer', 'Disclaimer'], ['Sitemap', 'Sitemap']])
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><script src="./ds-base.js"></script><style>html,body{margin:0;padding:0;background:#fff}body{-webkit-font-smoothing:antialiased;overflow-x:clip}*{box-sizing:border-box}a{color:#2F6DB4;text-decoration:none}a:hover{color:#E41D26}.bgr-exp header a,.bgr-open header a{color:#fff!important}</style></helmet><div style="position:relative;font-family:'Inter',sans-serif;color:#16295B;background:#fff;overflow-x:clip"><dc-import name="SiteHeader" hint-size="100%,0px"></dc-import><main data-screen-label="Our Businesses"><section id="businesses" data-screen-label="Businesses" style="position:relative;padding:clamp(120px,16vh,150px) 0 clamp(70px,10vh,120px)">
+<div style="max-width:1560px;margin:0 auto;padding:0 clamp(58px,7vw,132px)">
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:stretch">
+<div style="flex:0 0 clamp(300px,33vw,500px);min-width:0;align-self:flex-start;height:clamp(380px,54vh,520px);padding:0 clamp(8px,1.6vw,32px) 0 0;display:flex;flex-direction:column;justify-content:flex-end"><div style="font-family:'Inter',sans-serif;font-size:14px;color:#8B94AD;margin-bottom:26px">Our Businesses</div><h1 style="font-family:'Manrope',sans-serif;font-weight:500;font-size:clamp(34px,3.9vw,56px);line-height:1.08;letter-spacing:-.032em;margin:0"><span style="color:#6F82B0">Three businesses,</span><br><span style="color:#16295B">one operating promise.</span></h1><p style="font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;color:#5A6788;margin:22px 0 0;max-width:40ch;text-wrap:pretty">Our businesses are built for scale and resilience, and generate more regular, recurring revenue as our EPC work gives way to services and products.</p></div>
+<sc-for list="{{ bizCards }}" as="c" hint-placeholder-count="3">
+<a href="{{ c.href }}" onClick="{{ c.onClick }}" onMouseEnter="{{ c.onEnter }}" onMouseLeave="{{ c.onLeave }}" onFocus="{{ c.onEnter }}" onBlur="{{ c.onLeave }}" data-bizc="{{ c.idx }}" style="position:relative;display:block;flex:1 1 0;min-width:150px;align-self:flex-start;margin-top:{{ c.mt }};height:{{ c.h }};border-radius:6px;overflow:hidden;background:#D6DFEE;color:#fff;text-decoration:none;transition:flex-grow 600ms cubic-bezier(.22,1,.36,1)">
+<img src="{{ c.src }}" alt="{{ c.alt }}" loading="lazy" data-part="img" data-pos="{{ c.pos }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform:scale(1);transition:transform 900ms cubic-bezier(.22,1,.36,1)">
+<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,17,38,0) 40%,rgba(9,17,38,.72) 100%);pointer-events:none"></div>
+<div aria-hidden="true" data-part="shade" style="position:absolute;inset:0;background:rgba(12,24,52,.62);opacity:0;transition:opacity 600ms cubic-bezier(.22,1,.36,1);pointer-events:none"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;padding:clamp(18px,1.8vw,26px);display:flex;flex-direction:column;color:#fff">
+<div style="font-family:'Manrope',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:12px">{{ c.n }}</div>
+<div style="font-family:'Manrope',sans-serif;font-weight:700;font-size:clamp(16px,1.45vw,24px);letter-spacing:-.02em;line-height:1.2;color:#fff;text-wrap:balance;overflow-wrap:anywhere">{{ c.title }}</div>
+<div data-part="body" style="display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows 600ms cubic-bezier(.22,1,.36,1), opacity 400ms ease 0ms"><div style="overflow:hidden;min-height:0"><p style="font-size:15px;line-height:1.65;color:#fff;margin:16px 0 0;max-width:46ch;text-wrap:pretty">{{ c.lead }}</p><div style="margin-top:18px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px">{{ c.cta }}</div></div></div>
+</div>
+</a>
+</sc-for>
+</div>
+</div>
+</section></main><div style="border-top:1px solid #E0E4EC"><dc-import name="SiteFooter" hint-size="100%,420px"></dc-import></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { scrolled: false, stop: 0, bizHover: -1 };
+  expandTo(e, href, src) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    e.preventDefault();
+    if (this._expanding) return; this._expanding = true;
+    const card = e.currentTarget, r = card.getBoundingClientRect(), im = card.querySelector('[data-part="img"]'), pos = (im && im.dataset.pos) || 'center';
+    const ease = 'cubic-bezier(.76,0,.24,1)', T = '760ms', GRAD = 'linear-gradient(90deg,rgba(9,17,38,.95) 0%,rgba(9,17,38,.9) 45%,rgba(9,17,38,.82) 100%)';
+    const ov = document.createElement('div');
+    ov.setAttribute('aria-hidden', 'true');
+    ov.style.cssText = 'position:fixed;z-index:50;left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;border-radius:6px;overflow:hidden;background:#0C1834 url(' + src + ') ' + pos + '/cover no-repeat;transition:left ' + T + ' ' + ease + ',top ' + T + ' ' + ease + ',width ' + T + ' ' + ease + ',height ' + T + ' ' + ease + ',border-radius ' + T + ' ' + ease;
+    const sh = document.createElement('div');
+    sh.style.cssText = 'position:absolute;inset:0;background:' + GRAD + ';opacity:0;transition:opacity ' + T + ' ease';
+    ov.appendChild(sh); document.body.appendChild(ov);
+    document.body.classList.add('bgr-exp');
+    const fr = document.createElement('iframe');
+    fr.setAttribute('title', 'Business page'); fr.src = href;
+    fr.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;z-index:40;background:#0C1834;opacity:0;pointer-events:none';
+    document.body.appendChild(fr);
+    const t0 = performance.now();
+    let expanded = false, ready = false, done = false;
+    const reveal = () => {
+      if (done || !expanded || !ready) return; done = true;
+      fr.style.zIndex = '55'; fr.style.pointerEvents = 'auto'; fr.style.transition = 'opacity 450ms ease'; fr.style.opacity = '1'; document.body.classList.add('bgr-open');
+      try { history.pushState({ bizOpen: href }, '', href); } catch (x) {}
+      this._biz = { fr, ov, href };
+      setTimeout(() => { if (ov.parentNode) ov.parentNode.removeChild(ov); document.body.classList.remove('bgr-exp'); document.body.style.overflow = 'hidden'; this._expanding = false; }, 520);
+    };
+    const poll = () => {
+      try { const d = fr.contentDocument; if (d && d.readyState === 'complete' && d.querySelector('.stage') && d.querySelector('header')) { setTimeout(() => { ready = true; reveal(); }, 250); return; } } catch (x) {}
+      if (performance.now() - t0 > 6000) { window.location.href = href; return; }
+      setTimeout(poll, 60);
+    };
+    fr.addEventListener('load', poll); poll();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      ov.style.left = '0px'; ov.style.top = '0px'; ov.style.width = '100vw'; ov.style.height = '100vh'; ov.style.borderRadius = '0px'; sh.style.opacity = '1';
+    }));
+    setTimeout(() => { expanded = true; reveal(); }, 800);
+  }
+  swapBiz(href, dir) {
+    const b = this._biz; if (!b || this._swapping) return; this._swapping = true;
+    const old = b.fr, fr = document.createElement('iframe');
+    fr.setAttribute('title', 'Business page'); fr.src = href;
+    const EASE = 'cubic-bezier(.76,0,.24,1)', T = '700ms';
+    fr.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;z-index:56;background:#0C1834;transform:translateX(' + (dir * 100) + '%);pointer-events:none';
+    document.body.appendChild(fr);
+    const t0 = performance.now(); let done = false;
+    const go = () => {
+      if (done) return; done = true;
+      old.style.transition = 'transform ' + T + ' ' + EASE; fr.style.transition = 'transform ' + T + ' ' + EASE;
+      requestAnimationFrame(() => requestAnimationFrame(() => { old.style.transform = 'translateX(' + (-dir * 100) + '%)'; fr.style.transform = 'translateX(0)'; }));
+      try { history.replaceState({ bizOpen: href }, '', href); } catch (x) {}
+      this._biz = { fr: fr, ov: null, href: href };
+      setTimeout(() => { if (old.parentNode) old.parentNode.removeChild(old); fr.style.zIndex = '55'; fr.style.pointerEvents = 'auto'; this._swapping = false; }, 760);
+    };
+    const poll = () => {
+      try { const d = fr.contentDocument; if (d && d.readyState === 'complete' && d.querySelector('.stage') && d.querySelector('header')) { setTimeout(go, 200); return; } } catch (x) {}
+      if (performance.now() - t0 > 6000) { window.location.href = href; return; }
+      setTimeout(poll, 60);
+    };
+    fr.addEventListener('load', poll); poll();
+  }
+  closeBiz() {
+    const b = this._biz; if (!b) return; this._biz = null;
+    const fr = b.fr, href = (b.href || '').split('/').pop();
+    const cards = [...document.querySelectorAll('[data-bizc]')];
+    const card = cards.find(c => (c.getAttribute('href') || '').split('/').pop() === href) || cards[0];
+    const im = card.querySelector('[data-part="img"]'), src = im ? im.getAttribute('src') : '', pos = (im && im.dataset.pos) || 'center';
+    const EASE = 'cubic-bezier(.76,0,.24,1)', T = '760ms', GRAD = 'linear-gradient(90deg,rgba(9,17,38,.95) 0%,rgba(9,17,38,.9) 45%,rgba(9,17,38,.82) 100%)';
+    const ov = document.createElement('div');
+    ov.setAttribute('aria-hidden', 'true');
+    ov.style.cssText = 'position:fixed;z-index:56;left:0;top:0;width:100vw;height:100vh;border-radius:0;overflow:hidden;opacity:0;background:#0C1834 url(' + src + ') ' + pos + '/cover no-repeat;transition:opacity 260ms ease';
+    const sh = document.createElement('div');
+    sh.style.cssText = 'position:absolute;inset:0;background:' + GRAD + ';opacity:1;transition:opacity ' + T + ' cubic-bezier(.75,0,.75,.9)';
+    ov.appendChild(sh); document.body.appendChild(ov);
+    requestAnimationFrame(() => requestAnimationFrame(() => { ov.style.opacity = '1'; }));
+    setTimeout(() => {
+      if (fr.parentNode) fr.parentNode.removeChild(fr);
+      document.body.style.overflow = ''; document.body.classList.remove('bgr-open');
+      const r = card.getBoundingClientRect();
+      ov.style.transition = 'left ' + T + ' ' + EASE + ',top ' + T + ' ' + EASE + ',width ' + T + ' ' + EASE + ',height ' + T + ' ' + EASE + ',border-radius ' + T + ' ' + EASE;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        ov.style.left = r.left + 'px'; ov.style.top = r.top + 'px'; ov.style.width = r.width + 'px'; ov.style.height = r.height + 'px'; ov.style.borderRadius = '6px'; sh.style.opacity = '0';
+      }));
+      setTimeout(() => { ov.style.transition = 'opacity 200ms ease'; ov.style.opacity = '0'; setTimeout(() => { if (ov.parentNode) ov.parentNode.removeChild(ov); }, 220); }, 800);
+    }, 300);
+  }
+  syncBizImgs() { const hb = this.state.bizHover; document.querySelectorAll('[data-bizc]').forEach(el => { const on = +el.dataset.bizc === hb; el.style.flexGrow = on ? 1.8 : 1; const img = el.querySelector('[data-part="img"]'), sh = el.querySelector('[data-part="shade"]'), bd = el.querySelector('[data-part="body"]'); if (img) { if (img.dataset.pos) img.style.objectPosition = img.dataset.pos; img.style.transform = on ? 'scale(1.04)' : 'scale(1)'; } if (sh) sh.style.opacity = on ? 1 : 0; if (bd) { bd.style.gridTemplateRows = on ? '1fr' : '0fr'; bd.style.opacity = on ? 1 : 0; bd.style.transition = 'grid-template-rows 600ms cubic-bezier(.22,1,.36,1), opacity 400ms ease ' + (on ? '120ms' : '0ms'); } }); }
+  componentDidUpdate() { this.syncBizImgs(); }
+  purposeRef = React.createRef();
+  componentDidMount() {
+    this._pop = () => { if (this._biz) this.closeBiz(); };
+    this._msg = (ev) => { if (!ev.data || !this._biz) return; if (ev.data.bgrClose) history.back(); else if (ev.data.bgrGo) this.swapBiz(ev.data.bgrGo, ev.data.dir || 1); };
+    window.addEventListener('popstate', this._pop);
+    window.addEventListener('message', this._msg);
+    this.syncBizImgs();
+    this.onScroll = () => {
+      const scrolled = window.scrollY > 40;
+      let stop = this.state.stop;
+      const el = this.purposeRef.current;
+      if (el) {
+        const r = el.getBoundingClientRect(), span = r.height - window.innerHeight;
+        const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+        stop = Math.min(2, Math.floor(p * 3.001));
+      }
+      if (scrolled !== this.state.scrolled || stop !== this.state.stop) this.setState({ scrolled, stop });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); }
+  body(lead, bullets, why) {
+    const h = React.createElement, p = { fontSize: 16, fontWeight: 200, lineHeight: 1.375, color: '#5A6788' };
+    return h(React.Fragment, null,
+      h('p', { style: { ...p, color: '#43517D', margin: 0 } }, lead),
+      h('ul', { style: { ...p, margin: '16px 0 0', padding: '0 0 0 18px' } }, bullets.map(b => h('li', { key: b }, b))),
+      h('p', { style: { ...p, margin: '16px 0 0' } }, h('strong', { style: { color: '#16295B' } }, 'Why now:'), ' ' + why));
+  }
+  renderVals() {
+    const ph = (label) => 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="100%" height="100%" fill="#D6DFEE"/><text x="50%" y="50%" fill="#5A6788" font-family="sans-serif" font-size="22" text-anchor="middle">${label}</text></svg>`);
+    const logo = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="69" height="74"><text x="50%" y="56%" fill="#E41D26" font-family="Manrope,sans-serif" font-weight="800" font-size="22" text-anchor="middle">BGR</text></svg>');
+    const STOPS = ['More output.', 'Higher uptime.', 'Less waste.'];
+    const BIZ = [
+      { title: 'Heat Transfer Products', img: { src: 'assets/home/biz-heat-transfer-tirupur.jpg', alt: 'Membrane pressure vessels and piping at BGR’s Tirupur installation', pos: 'center' }, lead: 'The engineering and products partner for heavy-duty thermal management, from ACHE equipment to spares, servicing, and aftermarket upgrades.', bullets: ['Engineered heat exchange equipment, including air-cooled heat exchangers (ACHE)', 'Installed-base aftermarket in spares, servicing and upgrades', 'ACHE make capability from a Tamil Nadu manufacturing base'], why: 'the global surge in AI-related investments means that the data centre cooling market alone is projected to grow from about $21 billion in 2026 to over $55 billion by 2034.', href: 'HeatTransferProducts.dc.html', cta: 'Explore Heat Transfer Products →' },
+      { title: 'Digital & Engineering Services', img: { src: 'assets/home/biz-engineering-people.jpg', alt: 'Two BGR engineers reviewing drawings beside large debris filter systems', pos: '28% 60%' }, lead: 'Multi-discipline engineering and AI-enabled digital delivery for global EPCs, owner-operators and infrastructure developers across energy, O&G, data centres and process industries.', bullets: ['40-year, 15,000+ MW execution record', 'Domain depth, technology tools and execution rigour', 'Experienced mechanical, electrical and process engineers with a real project delivery track record'], why: 'the export-oriented engineering services market accessible from talent-rich centres is estimated at about INR 90,000 Cr annually, growing 10 to 15% a year.', href: 'EngineeringServices.dc.html', cta: 'Explore Engineering Services →' },
+      { title: 'Nuclear BOP and Conventional Island', img: { src: 'assets/home/biz-nuclear-tower.jpg', alt: 'Illuminated cooling tower at dusk', pos: 'center 60%' }, lead: 'BOP and conventional island engineering and supply.', bullets: ['An existing NPCIL track record in nuclear BOP', 'Turbine island and BOP capability from thermal EPC'], why: 'India is entering its fastest nuclear expansion in three decades.', href: 'Nuclear.dc.html', cta: 'Explore Nuclear →' }];
+    return {
+      bizCards: BIZ.map((b, i) => ({ idx: i, onClick: (e) => this.expandTo(e, b.href, b.img.src), mt: (i * 60) + 'px', h: 'clamp(380px,54vh,520px)', pos: b.img.pos || '', n: '0' + (i + 1), title: b.title, lead: b.lead, cta: b.cta, href: b.href, src: b.img.src, alt: b.img.alt, onEnter: () => this.setState({ bizHover: i }), onLeave: () => this.setState(s => (s.bizHover === i ? { bizHover: -1 } : null)) })),
+      purposeRef: this.purposeRef,
+      headerTransparent: !this.state.scrolled,
+      stopIndex: this.state.stop,
+      stopHeadline: STOPS[this.state.stop],
+      logoSrc: logo,
+      heroBg: undefined,
+      heroHeadline: React.createElement(React.Fragment, null, 'Engineering Efficiency.', React.createElement('br'), 'Enabling Performance.'),
+      heroPrimary: { children: 'Investor Relations', href: 'Investors.dc.html' },
+      heroSecondary: { children: 'Our Story', href: 'OurStory.dc.html' },
+      heroCard: { href: 'Investors.dc.html', eyebrow: 'Latest news', label: '2026 Annual Report', image: { src: 'assets/dholpur4.jpg', alt: 'BGR project site' } },
+      navLinks: [{ label: 'Investors', href: 'Investors.dc.html' }, { label: 'News and Media', href: 'NewsAndMedia.dc.html' }, { label: 'Careers', href: 'Careers.dc.html' }],
+      menus: [
+        { label: 'Who We Are', columns: [
+          { label: 'Who we are', links: [{ label: 'Our Principles', href: 'WhoWeAre.dc.html#purpose' }, { label: 'Our Story', href: 'OurStory.dc.html' }, { label: 'Why BGR Wins', href: 'WhoWeAre.dc.html#why-bgr-wins' }, { label: 'How We Build', href: 'WhoWeAre.dc.html#how-we-build' }] },
+          { label: '', links: [{ label: 'Leadership and Board', href: 'LeadershipAndBoard.dc.html' }, { label: 'Track Record and EPC Capabilities', href: 'TrackRecord.dc.html' }, { label: 'Where We Operate', href: 'WhereWeOperate.dc.html' }] }],
+          footerLink: { label: 'Who We Are overview →', href: 'WhoWeAre.dc.html' } },
+        { label: 'Our Businesses', columns: [
+          { label: 'Cooling', links: [{ label: 'Visit bgrcooling.com ↗', href: 'https://bgrcooling.com' }] },
+          { label: 'Design & Engineering Services', links: [{ label: 'Visit bgrengineering.com ↗', href: 'https://bgrengineering.com' }] },
+          { label: 'Nuclear BOP & Conventional Island', links: [{ label: 'Explore Nuclear →', href: 'Nuclear.dc.html' }] }],
+          footerLink: { label: 'View all our businesses →', href: 'OurBusinesses.dc.html' } }],
+      bizEntries: [
+        { title: 'Heat Transfer Products', image: { src: 'assets/ache.jpg', alt: 'Heat Transfer Products' }, exploreLink: { label: 'Explore Heat Transfer Products →', href: 'HeatTransferProducts.dc.html' },
+          body: this.body('Air cooled heat exchangers (ACHE) and aftermarket services for refineries, petrochemicals, power and data centres.', ['40 years of ACHE design and manufacture', 'Aftermarket: retrofit, re-tube, performance upgrade'], 'data centres, refineries and process plants must reject more heat with less water and less power. Air cooled heat exchange is the answer where water is scarce.') },
+        { title: 'Digital & Engineering Services', image: { src: 'assets/dholpur4.jpg', alt: 'Digital & Engineering Services' }, exploreLink: { label: 'Explore Engineering Services →', href: 'EngineeringServices.dc.html' },
+          body: this.body('Design and digital services for asset owners and EPCs, from concept to construction.', ['Engineering behind 15,000+ MW of EPC delivery', 'AI-assisted drafting and quality control in development'], 'global EPCs and asset owners are moving engineering to India at scale, and want partners with execution history rather than seat count.') },
+        { title: 'Nuclear BOP and Conventional Island', image: { src: 'assets/valuthur.jpg', alt: 'Nuclear BOP and Conventional Island' }, exploreLink: { label: 'Explore Nuclear →', href: 'Nuclear.dc.html' },
+          body: this.body("Balance of plant and conventional island packages for India's nuclear programme.", ['Kudankulam', 'Turbine island and BOP capability for thermal EPC'], "India's nuclear build-out needs balance of plant and conventional island partners with a thermal power delivery record.") }],
+      news: [
+        { meta: '[DD Mon YYYY] · Stock exchange filing', title: 'Headline of the most recent filing, two lines at most.' },
+        { meta: '[DD Mon YYYY] · Press release', title: 'Headline of the most recent release, two lines at most.' },
+        { meta: '[DD Mon YYYY] · Company news', title: 'Headline of the most recent company story, two lines at most.' }],
+      routes: [
+        { title: 'Investors', description: 'Results, filings, governance, contacts', meta: 'P-300', href: 'Investors.dc.html' },
+        { title: 'Media', description: 'Releases, media kit, spokespeople', meta: 'P-400', href: 'NewsAndMedia.dc.html' },
+        { title: 'Careers', description: 'Open roles, life at BGR, graduates', meta: 'P-500', href: 'Careers.dc.html' }],
+      clients: ['Bechtel', 'Siemens', 'Technip', 'Reliance', 'L&T', 'ONGC', 'Samsung Engineering', 'Hyundai Heavy', 'SNC-Lavalin', 'Petrofac', 'Weir', 'ADNOC', 'Foster Wheeler', 'Toyo Engineering', 'Uhde'],
+      footerCols: [
+        { label: 'Who We Are', links: [['Our Principles', 'WhoWeAre.dc.html#purpose'], ['Our Story', 'OurStory.dc.html'], ['Why BGR Wins', 'WhoWeAre.dc.html#why-bgr-wins'], ['How We Build', 'WhoWeAre.dc.html#how-we-build'], ['Leadership and Board', 'LeadershipAndBoard.dc.html'], ['Where We Operate', 'WhereWeOperate.dc.html']].map(([label, href]) => ({ label, href })) },
+        { label: 'Our Businesses', links: [['Heat Transfer Products', 'HeatTransferProducts.dc.html'], ['Digital & Engineering Services', 'EngineeringServices.dc.html'], ['Nuclear BOP and Conventional Island', 'Nuclear.dc.html'], ['EPC and Project Businesses', 'EPCProjectBusinesses.dc.html']].map(([label, href]) => ({ label, href })) },
+        { label: 'Investors', links: ['Investor Relations home', 'Financial Results', 'Annual Reports', 'Stock Exchange Filings', 'Corporate Governance'].map(label => ({ label, href: 'Investors.dc.html' })).concat([{ label: 'Investor Contact', href: 'Contact.dc.html' }]) },
+        { label: 'Company', links: [['News and Media', 'NewsAndMedia.dc.html'], ['Careers', 'Careers.dc.html'], ['Contact', 'Contact.dc.html']].map(([label, href]) => ({ label, href })) }],
+      legalLinks: [['Privacy Policy', 'Privacy.dc.html'], ['Terms of Use', 'Terms.dc.html'], ['Cookie Preferences', 'Cookies.dc.html'], ['Accessibility Statement', 'Accessibility.dc.html'], ['Disclaimer', 'Disclaimer.dc.html'], ['Sitemap', 'Sitemap.dc.html']].map(([label, href]) => ({ label, href }))
+    };
+  }
+}
+</script>
+</body>
+</html>

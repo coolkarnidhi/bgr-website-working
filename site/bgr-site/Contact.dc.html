@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><script src="./ds-base.js"></script><style>html,body{margin:0;padding:0;background:#fff}body{-webkit-font-smoothing:antialiased;overflow-x:clip}*{box-sizing:border-box}a{color:#2F6DB4;text-decoration:none}a:hover{color:#E41D26}@media (min-width:900px){.hero-sub{white-space:nowrap!important;max-width:none!important}}</style></helmet>
+<div style="position:relative;font-family:'Inter',sans-serif;color:#16295B;background:#fff;overflow-x:clip">
+<dc-import name="SiteHeader" hint-size="100%,0px"></dc-import>
+<main data-screen-label="Contact">
+<section data-screen-label="Page hero" style="position:relative;padding:clamp(150px,20vh,190px) 0 0">
+<div style="max-width:1560px;margin:0 auto;padding:0 clamp(58px,7vw,132px)">
+
+<h1 style="font-family:'Manrope',sans-serif;font-weight:700;font-size:clamp(32px,3.8vw,54px);line-height:1.12;letter-spacing:-.02em;color:#16295B;margin:0">Contact</h1>
+<p class="hero-sub" style="font-size:16px;line-height:1.75;color:#5A6788;margin:20px 0 0;max-width:64ch">One form for every enquiry. Choose an enquiry type and we will route it to investor relations, media, careers, products or design &amp; engineering.</p>
+</div>
+</section>
+<section style="position:relative;padding:clamp(48px,7vh,80px) 0 clamp(90px,12vh,140px)">
+<div style="max-width:1560px;margin:0 auto;padding:0 clamp(58px,7vw,132px);display:flex;flex-wrap:wrap;gap:clamp(32px,4vw,64px);align-items:flex-start">
+<div data-screen-label="Enquiry form" style="flex:1 1 520px;min-width:0;border:1px solid #C7CBD9;border-radius:6px;background:#fff;padding:clamp(28px,3vw,44px)">
+<sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+<form onSubmit="{{ onSubmit }}" style="display:flex;flex-direction:column;gap:20px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Name</span><input required name="name" style="border:1px solid #C7CBD9;border-radius:5px;padding:13px 16px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none"></label>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Organisation</span><input name="org" style="border:1px solid #C7CBD9;border-radius:5px;padding:13px 16px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none"></label>
+</div>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Email</span><input required type="email" name="email" style="border:1px solid #C7CBD9;border-radius:5px;padding:13px 16px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none"></label>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Enquiry type</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ types }}" as="t" hint-placeholder-count="3">
+<sc-if value="{{ t.active }}" hint-placeholder-val="{{ false }}"><button type="button" style="border:1px solid #16295B;background:#16295B;color:#fff;cursor:pointer;padding:9px 20px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600">{{ t.label }}</button></sc-if>
+<sc-if value="{{ t.inactive }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ t.onClick }}" style="border:1px solid #C7CBD9;background:#fff;color:#16295B;cursor:pointer;padding:9px 20px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600" style-hover="border-color:#16295B">{{ t.label }}</button></sc-if>
+</sc-for>
+</div>
+<span style="font-size:12.5px;color:#8B94AD">{{ routeNote }}</span>
+</div>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Message</span><textarea required name="message" rows="6" style="border:1px solid #C7CBD9;border-radius:5px;padding:13px 16px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none;resize:vertical"></textarea></label>
+<div><button type="submit" style="border:none;cursor:pointer;padding:14px 34px;border-radius:100px;background:#E41D26;color:#fff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;transition:background 200ms" style-hover="background:#16295B">Submit</button></div>
+</form>
+</sc-if>
+<sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:12px;padding:20px 0">
+<div style="font-family:'Manrope',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#E41D26">Enquiry sent</div>
+<div style="font-family:'Manrope',sans-serif;font-weight:700;font-size:24px;color:#16295B">Thank you.</div>
+<p style="font-size:15px;line-height:1.7;color:#5A6788;margin:0">{{ sentNote }}</p>
+<div><button type="button" onClick="{{ reset }}" style="border:1px solid #16295B;background:transparent;color:#16295B;cursor:pointer;padding:11px 24px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;margin-top:8px">Send another enquiry</button></div>
+</div>
+</sc-if>
+</div>
+<aside data-screen-label="Offices and direct routes" style="flex:1 1 300px;max-width:440px;display:flex;flex-direction:column;gap:14px">
+<div style="font-family:'Manrope',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#E41D26">Offices &amp; direct routes</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ offices }}" as="o" hint-placeholder-count="2">
+<button type="button" onClick="{{ o.onClick }}" style="cursor:pointer;padding:8px 16px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:12.5px;font-weight:600;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.fg }};transition:background 200ms,color 200ms,border-color 200ms">{{ o.label }}</button>
+</sc-for>
+</div>
+<div style="aspect-ratio:16/10;border-radius:6px;background:#D6DFEE;position:relative;overflow:hidden;border:1px solid #E0E4EC"><iframe src="{{ mapSrc }}" title="Map of the selected BGR office" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe></div>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="font-size:13px;line-height:1.6;color:#5A6788">{{ officeAddress }}</div><a href="{{ mapLink }}" target="_blank" rel="noopener" style="flex:none;font-family:'Manrope',sans-serif;font-size:12.5px;font-weight:600;color:#E41D26;white-space:nowrap">Open in Maps ↗</a></div>
+</div>
+<div style="border-radius:6px;background:#F7F8FB;border:1px solid #E0E4EC;padding:6px 22px">
+<a href="Investors.dc.html#inv-contact" style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #E0E4EC;font-family:'Manrope',sans-serif;font-weight:600;font-size:15px;color:#16295B" style-hover="color:#E41D26"><span>Investor contact</span><span style="color:#E41D26">→</span></a>
+<a href="NewsAndMedia.dc.html" style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #E0E4EC;font-family:'Manrope',sans-serif;font-weight:600;font-size:15px;color:#16295B" style-hover="color:#E41D26"><span>Media contact</span><span style="color:#E41D26">→</span></a>
+<a href="https://bgrcooling.com" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #E0E4EC;font-family:'Manrope',sans-serif;font-weight:600;font-size:15px;color:#16295B" style-hover="color:#E41D26"><span>Cooling enquiries</span><span style="color:#E41D26">↗</span></a>
+<a href="https://bgrengineering.com" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;font-family:'Manrope',sans-serif;font-weight:600;font-size:15px;color:#16295B" style-hover="color:#E41D26"><span>Design &amp; Engineering enquiries</span><span style="color:#E41D26">↗</span></a>
+</div>
+</aside>
+</div>
+</section>
+</main>
+<div style="border-top:1px solid #E0E4EC"><dc-import name="SiteFooter" hint-size="100%,420px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { type: 'Investor relations', sent: false, office: 0 };
+  renderVals() {
+    const routes = { 'Investor relations': 'Routed to the investor relations team.', 'Media': 'Routed to the media team.', 'Careers': 'Routed to the careers team.', 'Product enquiries': 'Routed to the products team.', 'Design & engineering enquiries': 'Routed to the design and engineering services team.' };
+    const OFF = [
+      { label: 'Corporate office', address: '443 Anna Salai, Teynampet, Chennai 600018', q: 'BGR Energy Systems Limited, 443 Anna Salai, Teynampet, Chennai 600018' },
+      { label: 'Registered office', address: 'Plot E-4, Pannamgadu Industrial Estate, Ramapuram Post, Tada Mandalam, Tirupathi District, Andhra Pradesh 524401', q: 'Pannamgadu Industrial Estate, Ramapuram, Tada, Andhra Pradesh 524401', z: 14 }
+    ];
+    const cur = OFF[this.state.office];
+    return {
+      offices: OFF.map((o, i) => { const on = i === this.state.office; return { label: o.label, onClick: () => this.setState({ office: i }), bg: on ? '#16295B' : '#fff', fg: on ? '#fff' : '#16295B', border: on ? '#16295B' : '#C7CBD9' }; }),
+      mapSrc: 'https://www.google.com/maps?q=' + encodeURIComponent(cur.q) + (cur.z ? '&z=' + cur.z : '') + '&output=embed',
+      mapLink: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(cur.q),
+      officeAddress: cur.address,
+      types: Object.keys(routes).map(label => ({ label, active: label === this.state.type, inactive: label !== this.state.type, onClick: () => this.setState({ type: label }) })),
+      routeNote: routes[this.state.type],
+      notSent: !this.state.sent, sent: this.state.sent,
+      sentNote: 'Your ' + this.state.type.toLowerCase() + ' enquiry has been received. The team will reply by email.',
+      onSubmit: e => { e.preventDefault(); this.setState({ sent: true }); },
+      reset: () => this.setState({ sent: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

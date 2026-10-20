@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><script src="./ds-base.js"></script><style>html,body{margin:0;padding:0;background:#fff}body{-webkit-font-smoothing:antialiased;overflow-x:clip}*{box-sizing:border-box}a{color:#2F6DB4;text-decoration:none}a:hover{color:#E41D26}@media (min-width:900px){.hero-sub{white-space:nowrap!important;max-width:none!important}}.rm-link{color:#6F82B0;transition:color 200ms}a:hover .rm-link,.rm-link:hover{color:#E41D26}</style></helmet>
+<div style="position:relative;font-family:'Inter',sans-serif;color:#16295B;background:#fff;overflow-x:clip">
+<dc-import name="SiteHeader" hint-size="100%,0px"></dc-import>
+<main data-screen-label="News and Media">
+<section data-screen-label="Newsroom hero" style="position:relative;background:#F4F6FA;min-height:clamp(440px,54vh,600px);display:flex;flex-direction:column;justify-content:flex-end">
+<div style="width:100%;box-sizing:border-box;max-width:1560px;margin:0 auto;padding:130px clamp(58px,7vw,132px) clamp(36px,5vh,56px);display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(32px,5vw,96px);flex-wrap:wrap">
+<div style="flex:1 1 420px;min-width:0">
+
+<h1 style="font-family:'Manrope',sans-serif;font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:clamp(40px,5.4vw,84px);margin:0;max-width:14ch;text-wrap:balance"><span style="color:#6F82B0">The latest from</span><br><span style="color:#16295B">BGR Energy.</span></h1>
+</div>
+<a href="{{ featured.href }}" target="_blank" rel="noopener" style="flex:0 0 clamp(270px,25vw,360px);width:clamp(270px,25vw,360px);display:flex;flex-direction:column;border:1px solid #C7CBD9;border-radius:6px;overflow:hidden;background:#fff;transition:border-color 200ms,box-shadow 200ms" style-hover="border-color:#E41D26;box-shadow:0 14px 32px rgba(22,41,91,.10)">
+<div style="padding:clamp(16px,1.6vw,22px);display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-family:'Manrope',sans-serif;font-weight:700;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#E41D26">Featured story</span><span style="padding:4px 11px;border-radius:100px;background:#F7F8FB;border:1px solid #E0E4EC;font-size:12px;font-weight:600;color:#16295B">{{ featured.cat }}</span></div>
+<div style="font-family:'Manrope',sans-serif;font-weight:500;font-size:clamp(14.5px,1.15vw,17px);line-height:1.35;letter-spacing:-.005em;color:#16295B">{{ featured.title }}</div>
+<div class="rm-link" style="font-size:12.5px;font-weight:700">Read more →</div>
+</div>
+</a>
+</div>
+</section>
+<section data-screen-label="Filters" style="position:relative;padding:clamp(28px,4vh,40px) 0 0">
+<div style="max-width:1560px;margin:0 auto;padding:0 clamp(58px,7vw,132px)">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid #E0E4EC">
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+<sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button type="button" style="border:1px solid #16295B;background:#16295B;color:#fff;cursor:pointer;padding:9px 20px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600">{{ c.label }}</button></sc-if>
+<sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ c.onClick }}" style="border:1px solid #C7CBD9;background:#fff;color:#16295B;cursor:pointer;padding:9px 20px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;transition:border-color 200ms" style-hover="border-color:#16295B">{{ c.label }}</button></sc-if>
+</sc-for>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<select value="{{ year }}" onChange="{{ onYear }}" aria-label="Filter by year" style="appearance:none;-webkit-appearance:none;border:1px solid #C7CBD9;background:#fff;color:#16295B;cursor:pointer;padding:9px 36px 9px 18px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;background-image:linear-gradient(45deg,transparent 50%,#16295B 50%),linear-gradient(135deg,#16295B 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 15px) 55%;background-size:5px 5px;background-repeat:no-repeat">
+<sc-for list="{{ yearOpts }}" as="y" hint-placeholder-count="4"><option value="{{ y.value }}">{{ y.label }}</option></sc-for>
+</select>
+<input type="search" value="{{ q }}" onChange="{{ onSearch }}" placeholder="Search news" aria-label="Search news" style="border:1px solid #C7CBD9;background:#fff;color:#16295B;padding:9px 18px;border-radius:100px;font-family:'Inter',sans-serif;font-size:13px;width:220px;outline:none">
+</div>
+</div>
+</div>
+</section>
+<section data-screen-label="Story grid" style="position:relative;padding:clamp(32px,5vh,52px) 0 clamp(90px,12vh,140px)">
+<div style="max-width:1560px;margin:0 auto;padding:0 clamp(58px,7vw,132px);display:flex;flex-wrap:wrap;gap:clamp(32px,4vw,56px);align-items:flex-start">
+<div style="flex:1 1 560px;min-width:0">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:18px"><div style="font-family:'Manrope',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#E41D26">Latest stories</div><div style="font-size:12.5px;color:#8B94AD">{{ countLabel }}</div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px">
+<sc-for list="{{ stories }}" as="s" hint-placeholder-count="6">
+<a href="{{ s.href }}" target="_blank" rel="noopener" style="display:flex;flex-direction:column;border:1px solid #C7CBD9;border-radius:6px;overflow:hidden;background:#fff;transition:border-color 200ms,box-shadow 200ms,transform 200ms" style-hover="border-color:#E41D26;box-shadow:0 10px 24px rgba(22,41,91,.08);transform:translateY(-1px)">
+<div style="aspect-ratio:16/9;background:#16295B;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Manrope',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.01em;text-align:center;padding:16px;position:relative;overflow:hidden">{{ s.source }}<img src="{{ s.imgSrc }}" alt="Print clipping" style="display:{{ s.imgDisplay }};position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;background:#fff"></div>
+<div style="padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;flex-wrap:wrap;gap:6px;font-size:12px"><span style="font-weight:700;color:#E41D26;white-space:nowrap">{{ s.cat }}</span><span style="color:#8B94AD;white-space:nowrap">· {{ s.date }}</span></div>
+<div style="font-family:'Manrope',sans-serif;font-weight:600;font-size:16.5px;line-height:1.35;color:#16295B;text-wrap:pretty">{{ s.title }}<span data-ph="1" title="Placeholder: example of what BGR will publish here" style="display:{{ s.phDisplay }};margin-left:8px;padding:1px 7px;border-radius:100px;background:#FFF3CD;color:#8A5A00;border:1px solid #F0D58C;font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;vertical-align:middle;line-height:1.5">#</span></div>
+</div>
+</a>
+</sc-for>
+</div>
+<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><div style="border:1px dashed #C7CBD9;border-radius:6px;background:#F7F8FB;padding:40px;text-align:center;font-size:14px;color:#5A6788">No stories match these filters.</div></sc-if>
+<sc-if value="{{ hasMore }}" hint-placeholder-val="{{ true }}"><div style="display:flex;justify-content:center;margin-top:clamp(28px,4vh,40px)"><button type="button" onClick="{{ loadMore }}" style="border:1px solid #16295B;background:transparent;color:#16295B;cursor:pointer;padding:14px 34px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;transition:background 200ms,color 200ms" style-hover="background:#16295B;color:#fff">Load more</button></div></sc-if>
+</div>
+<aside data-screen-label="Media resources" style="flex:1 1 260px;max-width:380px;position:sticky;top:100px;margin-top:33px;border-radius:6px;background:#F7F8FB;border:1px solid #E0E4EC;padding:28px 26px">
+<div style="font-family:'Manrope',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#E41D26;margin-bottom:8px">Media resources</div>
+<a href="assets/press/BGR_Energy_Systems_Fact_Sheet.pdf" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid #E0E4EC;color:#16295B" style-hover="color:#E41D26"><span><span style="display:block;font-family:'Manrope',sans-serif;font-weight:600;font-size:15px">Press Kit &amp; Company Fact Sheet</span><span style="display:block;font-size:12.5px;color:#5A6788;margin-top:3px">Includes approved boilerplate</span></span><span style="color:#E41D26">↓</span></a>
+<a href="#" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid #E0E4EC;color:#16295B" style-hover="color:#E41D26"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:15px">Image and logo library<span data-ph="1" title="Needs a file or active link" style="display:inline-block;margin-left:8px;padding:1px 7px;border-radius:100px;background:#FFF3CD;color:#8A5A00;border:1px solid #F0D58C;font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;vertical-align:middle;line-height:1.5">#</span></span><span style="color:#E41D26">→</span></a>
+<div style="padding:16px 0;border-bottom:1px solid #E0E4EC"><div style="font-family:'Manrope',sans-serif;font-weight:600;font-size:15px;color:#16295B">Media contact</div><div style="font-size:13px;line-height:1.7;color:#5A6788;margin-top:6px">[Name]<br>Email: [media email]<br>Tel: [number]</div></div>
+<div style="padding:18px 0 0"><div style="font-family:'Manrope',sans-serif;font-weight:600;font-size:15px;color:#16295B">Subscribe</div><div style="font-size:13px;line-height:1.6;color:#5A6788;margin-top:4px">Get new stories by email.</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><input type="email" placeholder="Email address" aria-label="Email address" style="border:1px solid #C7CBD9;background:#fff;color:#16295B;padding:11px 18px;border-radius:100px;font-family:'Inter',sans-serif;font-size:13px;outline:none">
+<button type="button" style="display:inline-flex;align-items:center;justify-content:center;padding:14px 30px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;letter-spacing:.01em;cursor:pointer;transition:background 200ms,color 200ms,border-color 200ms;background:#E41D26;color:#fff;border:1px solid #E41D26" style-hover="background:#fff;color:#16295B;border-color:#16295B">Subscribe</button></div></div>
+</aside>
+</div>
+</section>
+</main>
+<div style="border-top:1px solid #E0E4EC"><dc-import name="SiteFooter" hint-size="100%,420px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { cat: 'All', year: 'all', q: '', shown: 6 };
+  static stories() {
+    const items = [{"source": "BGR Energy Systems", "title": "BGR Energy Systems Signs Master Restructuring Agreement with NARCL, Strengthening its Financial Foundation", "href": "NewsArticle.dc.html?id=narcl-mra", "img": "", "dateLabel": "06 Oct 2026", "d": [2026, 9, 6], "cat": "Press release", "internal": true, "standfirst": "BGR Energy Systems has entered into a Master Restructuring Agreement with NARCL, covering total outstanding debt of Rs. 3,736 crore, with the Sustainable Debt to be repaid by September 2030."}, {"source": "The Hindu BusinessLine", "title": "BGR Energy signs pact to restructure ₹3,736 cr debt", "href": "https://www.thehindubusinessline.com/companies/bgr-energy-signs-pact-to-recast-3736-cr-debt/article71555053.ece", "img": "", "dateLabel": "07 Oct 2026", "d": [2026, 9, 7], "standfirst": "BGR Energy Systems has signed a Master Restructuring Agreement with the National Asset Reconstruction Company to recast total outstanding debt of Rs 3,736 crore."}, {"source": "Dainik Bhaskar (print)", "title": "BGR Energy signs agreement with NARCL to restructure ₹3,736 crore debt", "href": "assets/news/dainik-bhaskar-print-narcl.jpg", "img": "assets/news/dainik-bhaskar-print-narcl.jpg", "dateLabel": "07 Oct 2026", "d": [2026, 9, 7]}, {"source": "CNBC TV18", "title": "BGR Energy to restructure ₹3,736 crore debt, allot 20% equity to NARCL", "href": "https://www.cnbctv18.com/business/companies/bgr-energy-to-restructure-rs-3736-crore-debt-allot-20-pc-equity-to-narcl-20004927.htm/", "img": "", "dateLabel": "05 Oct 2026", "d": [2026, 9, 5], "standfirst": "BGR Energy Systems signed a debt restructuring agreement with NARCL to repay its sustainable debt by 2030 and allot 20% equity to NARCL."}, {"source": "Press Trust of India", "title": "BGR Energy Systems shareholders approve MD Raghupathy's reappointment for 5 yrs", "href": "https://www.ptinews.com/story/business/bgr-energy-systems-shareholders-approve-md-raghupathy-s-reappointment-for-5-yrs/4100488", "img": "", "dateLabel": "25 Sep 2026"}, {"source": "ET Edge Insights", "title": "BGR shareholders approve all key resolutions at 40th AGM", "href": "https://etedge-insights.com/press-release/bgr-shareholders-approve-all-key-resolutions-at-40th-agm/", "img": "", "dateLabel": "25 Sep 2026"}, {"source": "News18", "title": "BGR Energy Shareholders Approve AGM Resolutions", "href": "https://www.news18.com/agency-feeds/bgr-energy-systems-shareholders-approve-md-raghupathys-reappointment-for-5-yrs-10353061.html", "img": "", "dateLabel": "25 Sep 2026"}, {"source": "Rediff India", "title": "BGR Energy Shareholders Reappoint MD Raghupathy for 5 Years", "href": "https://money.rediff.com/news/market/bgr-energy-shareholders-reappoint-md-raghupathy-for-5-years/55015520260925", "img": "", "dateLabel": "25 Sep 2026"}, {"source": "MSN", "title": "BGR AGM – Key resolutions approved", "href": "https://www.msn.com/en-in/money/executive-leadership-and-management/bgr-energy-systems-shareholders-approve-md-raghupathy-s-reappointment-for-5-yrs/ar-AA2cXu6j", "img": "", "dateLabel": "25 Sep 2026"}, {"source": "Dainik Jagran Online", "title": "Shareholders approve key resolution at BGR AGM", "href": "https://www.jagran.com/business/biz-bgr-energy-arjun-raghupathi-reappointed-md-office-relocation-approved-40384683.html", "img": "", "dateLabel": "25 Sep 2026"}, {"source": "Dainik Bhaskar Online", "title": "BGR AGM: Shareholders approve key board resolutions", "href": "https://www.bhaskarhindi.com/other/bgr-energy-shareholders-approved-all-seven-resolutions-at-the-40th-agm-1366546", "img": "", "dateLabel": "25 Sep 2026"}, {"source": "Dainik Bhaskar (print)", "title": "BGR AGM: Shareholders approve key board resolutions", "href": "assets/news/dainik-bhaskar-print-agm.jpg", "img": "assets/news/dainik-bhaskar-print-agm.jpg", "dateLabel": "Sep 2026"}, {"source": "The Pioneer (print)", "title": "BGR shareholders approve all key resolutions at 40th AGM", "href": "assets/news/pioneer-hindi-print-agm.jpg", "img": "assets/news/pioneer-hindi-print-agm.jpg", "dateLabel": "Sep 2026"}, {"source": "BGR Energy Systems", "title": "Quarterly results announcement, Q1", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Quarterly results announcement, Q2", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Quarterly results announcement, Q3", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Quarterly results announcement, Q4 and full year", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Notice of Board meeting to consider financial results", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Notice of Annual General Meeting", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "AGM outcome and voting results", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Record date and book closure", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Postal ballot notice and outcome", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Earnings call schedule and invitation", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Credit rating update", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Change in directors or key managerial personnel", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Outcome of Board meeting", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true},{"source": "BGR Energy Systems", "title": "Disclosure of material event or information", "href": "#", "img": "", "dateLabel": "Date", "cat": "Announcement", "ph": true}];
+    return items.map((it, i) => ({ id: 's' + (i + 1), cat: it.cat || 'Media coverage', ph: !!it.ph, dt: it.d ? new Date(it.d[0], it.d[1], it.d[2]) : (it.ph ? new Date(2026, 7, 31 - i) : new Date(2026, 8, 25 - i)), standfirst: it.standfirst || '', source: it.source, title: it.title, href: it.href, img: it.img, dateLabel: it.dateLabel }));
+  }
+  renderVals() {
+    const MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const fmt = (dt, y) => String(dt.getDate()).padStart(2, '0') + ' ' + MO[dt.getMonth()] + (y ? ' ' + dt.getFullYear() : '');
+    const all = Component.stories();
+    const { cat, year, q, shown } = this.state;
+    const catMap = { 'Press releases': 'Press release', 'Media coverage': 'Media coverage', 'Announcements': 'Announcement' };
+    const filtered = all.filter(s => (cat === 'All' || s.cat === catMap[cat]) && (year === 'all' || String(s.dt.getFullYear()) === year) && (!q || s.title.toLowerCase().includes(q.toLowerCase())));
+    const years = [...new Set(all.map(s => s.dt.getFullYear()))];
+    const list = filtered.slice(0, shown);
+    return {
+      cats: ['All', 'Press releases', 'Media coverage', 'Announcements'].map(label => ({ label, active: label === cat, inactive: label !== cat, onClick: () => this.setState({ cat: label, shown: 6 }) })),
+      yearOpts: [{ value: 'all', label: 'All years' }].concat(years.map(y => ({ value: String(y), label: String(y) }))),
+      year, q,
+      onYear: e => this.setState({ year: e.target.value, shown: 6 }),
+      onSearch: e => this.setState({ q: e.target.value, shown: 6 }),
+      featured: (() => { const f = all[0]; return { href: f.href, cat: f.cat, date: f.dateLabel + ' · ' + f.source, title: f.title, standfirst: f.standfirst }; })(),
+      stories: list.map(s => ({ phDisplay: s.ph ? 'inline-block' : 'none', href: s.href, cat: s.cat, date: s.dateLabel + ' · ' + s.source, title: s.title, imgSrc: s.img || '', imgDisplay: s.img ? 'block' : 'none', source: s.source })),
+      countLabel: filtered.length + (filtered.length === 1 ? ' story' : ' stories'),
+      isEmpty: filtered.length === 0,
+      hasMore: filtered.length > shown,
+      loadMore: () => this.setState({ shown: shown + 6 })
+    };
+  }
+}
+</script>
+</body>
+</html>

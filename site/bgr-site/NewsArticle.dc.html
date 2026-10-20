@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><script src="./ds-base.js"></script><style>html,body{margin:0;padding:0;background:#fff}body{-webkit-font-smoothing:antialiased;overflow-x:clip}*{box-sizing:border-box}a{color:#2F6DB4;text-decoration:none}a:hover{color:#E41D26}</style></helmet>
+<div style="position:relative;font-family:'Inter',sans-serif;color:#16295B;background:#fff;overflow-x:clip">
+<dc-import name="SiteHeader" hint-size="100%,0px"></dc-import>
+<main data-screen-label="News story">
+<article style="position:relative;padding:clamp(150px,20vh,190px) 0 clamp(64px,9vh,104px)">
+<div style="max-width:880px;margin:0 auto;padding:0 clamp(24px,5vw,48px)">
+
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span style="padding:5px 12px;border-radius:100px;background:#F7F8FB;border:1px solid #E0E4EC;font-size:12px;font-weight:600;color:#16295B">{{ story.cat }}</span><span style="font-size:13px;color:#8B94AD">{{ story.date }}</span></div>
+<h1 style="font-family:'Manrope',sans-serif;font-weight:700;font-size:clamp(30px,3.4vw,48px);line-height:1.15;letter-spacing:-.02em;color:#16295B;margin:16px 0 0;text-wrap:balance">{{ story.title }}</h1>
+<p style="font-size:18px;line-height:1.65;color:#43517D;margin:18px 0 0;text-wrap:pretty">{{ story.standfirst }}</p>
+</div>
+<div style="max-width:1160px;margin:clamp(32px,5vh,56px) auto 0;padding:0 clamp(24px,5vw,48px);display:{{ story.imgDisplay }}"><div style="aspect-ratio:16/8;border-radius:6px;background:#D6DFEE;display:flex;align-items:center;justify-content:center;color:#5A6788;font-size:13px;position:relative;overflow:hidden"><img src="assets/ache.jpg" alt="Story" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div></div>
+<div style="max-width:880px;margin:clamp(32px,5vh,56px) auto 0;padding:0 clamp(24px,5vw,48px)">
+<sc-if value="{{ story.hasBody }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:20px;font-size:17px;line-height:1.75;color:#2E3B66">
+<sc-for list="{{ story.body }}" as="p" hint-placeholder-count="3"><p style="margin:0;text-wrap:pretty">{{ p.text }}</p></sc-for>
+<div style="margin-top:8px"><a href="{{ story.pdf }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:13px 28px;border-radius:100px;border:1px solid #16295B;font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;color:#16295B" style-hover="background:#16295B;color:#fff">Download the media release (PDF)</a></div>
+<div style="border-top:1px solid #E0E4EC;padding-top:22px;font-size:14px;line-height:1.7;color:#5A6788"><strong style="font-family:'Manrope',sans-serif;color:#16295B">About BGR Energy Systems</strong><br>{{ story.about }}</div></div></sc-if>
+<sc-if value="{{ story.noBody }}" hint-placeholder-val="{{ true }}"><div style="border:1px dashed #C7CBD9;border-radius:6px;background:#F7F8FB;padding:26px 28px;font-size:14px;line-height:1.7;color:#5A6788">Story body to follow. Each story is published as its own web page, not a PDF, so it is searchable and reads well on mobile.</div></sc-if>
+<div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:32px;padding-top:24px;border-top:1px solid #E0E4EC"><a href="NewsAndMedia.dc.html" style="font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;color:#16295B">← Back to Newsroom</a><span style="font-size:13px;color:#8B94AD">{{ story.contact }}</span></div>
+</div>
+</article>
+<section data-screen-label="More stories" style="position:relative;padding:0 0 clamp(90px,12vh,140px)">
+<div style="max-width:1560px;margin:0 auto;padding:0 clamp(58px,7vw,132px)">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:24px"><h2 style="font-family:'Manrope',sans-serif;font-weight:500;font-size:clamp(24px,2.4vw,36px);letter-spacing:-.015em;margin:0;color:#16295B">More stories</h2><a href="NewsAndMedia.dc.html" style="font-size:13px;color:#E41D26;font-weight:600">All news →</a></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+<sc-for list="{{ more }}" as="s" hint-placeholder-count="3">
+<a href="{{ s.href }}" style="display:flex;flex-direction:column;border:1px solid #C7CBD9;border-radius:6px;overflow:hidden;background:#fff;transition:border-color 200ms,box-shadow 200ms" style-hover="border-color:#E41D26;box-shadow:0 10px 24px rgba(22,41,91,.08)">
+<div style="aspect-ratio:16/9;background:#D6DFEE;display:flex;align-items:center;justify-content:center;color:#5A6788;font-size:12px;position:relative;overflow:hidden"><img src="assets/dholpur1.jpg" alt="Story" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+<div style="padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;flex-wrap:wrap;gap:6px;font-size:12px"><span style="font-weight:700;color:#E41D26;white-space:nowrap">{{ s.cat }}</span><span style="color:#8B94AD;white-space:nowrap">· {{ s.date }}</span></div><div style="font-family:'Manrope',sans-serif;font-weight:600;font-size:16.5px;line-height:1.35;color:#16295B">{{ s.title }}</div></div>
+</a>
+</sc-for>
+</div>
+</div>
+</section>
+</main>
+<div style="border-top:1px solid #E0E4EC"><dc-import name="SiteFooter" hint-size="100%,420px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const cats = ['Press release', 'Media coverage', 'Award', 'Announcement', 'Press release', 'Media coverage'];
+    const MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const fmt = dt => String(dt.getDate()).padStart(2, '0') + ' ' + MO[dt.getMonth()] + ' ' + dt.getFullYear();
+    const all = [];
+    let d = new Date(2026, 8, 15);
+    for (let i = 0; i < 20; i++) {
+      const cat = cats[i % cats.length];
+      all.push({ id: 's' + (i + 1), cat, date: fmt(d), title: cat + ' headline placeholder ' + (i + 1) + ', two lines at most.', standfirst: 'One-line standfirst summarising the story for a scanning reader.' });
+      d.setDate(d.getDate() - (9 + (i * 7) % 23));
+    }
+    const featured = { id: 'featured', cat: 'Announcement', date: '18 Sep 2026', title: 'Headline of the lead story goes here', standfirst: 'One-line standfirst summarising the story for a scanning reader, steering the BGR 2.0 message.' };
+    const id = new URLSearchParams(window.location.search).get('id') || 'featured';
+    const release = { id: 'narcl-mra', cat: 'Press release', date: '06 Oct 2026', title: 'BGR Energy Systems Signs Master Restructuring Agreement with NARCL, Strengthening its Financial Foundation', standfirst: 'Chennai, 6 October 2026: BGR Energy Systems Limited has entered into a Master Restructuring Agreement with the National Asset Reconstruction Company Limited for the restructuring of its outstanding debt.',
+      imgDisplay: 'none', hasBody: true, noBody: false, pdf: 'assets/news/media-release-2026-10-06-narcl-mra.pdf',
+      contact: 'Media contact: compliance@bgrenergy.com · Adfactors PR, Minakshi Hase, minakshi.hase@adfactorspr.com, 9819800294',
+      about: 'BGR Energy Systems was originally incorporated in 1985, as a joint venture between GEA Energietechnik GmbH, Germany and the Promoter, Mr. B. G. Raghupathy, to manufacture and sell On-line Condenser Tube Cleaning Systems, Debris Filters and Rubber Cleaning Balls used in Thermal and Nuclear Power Plants. In 1993 Mr. B. G. Raghupathy and members of his family became the sole shareholders of the Company and began to expand the range of product and services range in the Power and Oil & Gas industries.',
+      body: [
+        'BGR Energy Systems Limited (“BGR/Company”) has entered into a Master Restructuring Agreement (MRA), inter-alia, with National Asset Reconstruction Company Limited (NARCL), acting through India Debt Resolution Company Limited, for the restructuring of its outstanding debt. The agreement marks a decisive milestone in strengthening the Company\'s financial foundation and advancing its journey of revival.',
+        'The restructuring covers the Company\'s total outstanding debt of Rs. 3,736 crores as of October 1, 2025, comprising Sustainable Debt of Rs. 1,245 crore and Unsustainable Debt of Rs. 2,491 crore. Under the agreement, the Sustainable Debt is to be repaid over a period of four years, by September 30, 2030.',
+        'The restructuring is expected to rationalise the Company\'s liabilities through an overall reduction in debt and to improve its net worth, placing the Company on a stronger footing for the next phase of its growth.',
+        'The milestone comes as the Company marks a significant transition in its leadership. Mrs. Sasikala Raghupathy has stepped down as Chairperson and Director with effect from September 30, 2026. Associated with BGR Energy since its inception in 1985, she stood by the Company through every chapter of its journey. On assuming the role of Chairperson in 2013, during one of the most testing periods in the Company\'s history, she held the institution together with quiet strength, keeping the Board, the management and stakeholders united and the Company\'s affairs steady. Having guided the Company through the transition to the next generation, with her son Mr. Arjun Govind Raghupathy, Managing Director, now also taking over as Chairman of the Board. The Board and the entire BGR family place on record their deep gratitude for her years of dedicated stewardship.',
+        'As part of its business diversification and revival strategy, the Company has expanded its presence in the Engineering Services business by leveraging its extensive engineering expertise and decades of experience in executing complex power and infrastructure projects. In FY26, the Company secured engineering services assignments from international customers, marking an important step towards expanding its presence in the global engineering services market. These assignments encompass engineering design, detailed engineering, technical documentation and project engineering support for power sector projects and demonstrate the continued confidence of international customers in the Company\'s engineering capabilities.',
+        'The Engineering Services business operates on an asset-light model with relatively lower capital requirements compared to conventional EPC projects and enables the Company to utilise its experienced engineering workforce and technical expertise more effectively. This business vertical is expected to complement the Company\'s core EPC operations by generating stable service-based revenue streams, improving operational flexibility and enhancing business diversification.',
+        'The Company intends to further strengthen this business by expanding its engineering capabilities, adopting advanced digital engineering tools and exploring additional opportunities in domestic and international markets. The management believes that the Engineering Services business will emerge as an important contributor to the Company\'s long-term growth strategy and support sustainable value creation.'
+      ].map(text => ({ text })) };
+    const story = id === 'narcl-mra' ? release : id === 'featured' ? featured : (all.find(s => s.id === id) || featured);
+    if (story !== release) Object.assign(story, { imgDisplay: 'block', hasBody: false, noBody: true, contact: 'Media contact: [media email]' });
+    return {
+      story,
+      more: all.filter(s => s.id !== story.id).slice(0, 3).map(s => ({ ...s, href: 'NewsArticle.dc.html?id=' + s.id }))
+    };
+  }
+}
+</script>
+</body>
+</html>
