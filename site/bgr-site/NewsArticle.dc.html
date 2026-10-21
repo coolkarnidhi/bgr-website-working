@@ -73,7 +73,7 @@ class Component extends DCLogic {
         'The Company intends to further strengthen this business by expanding its engineering capabilities, adopting advanced digital engineering tools and exploring additional opportunities in domestic and international markets. The management believes that the Engineering Services business will emerge as an important contributor to the Company\'s long-term growth strategy and support sustainable value creation.'
       ].map(text => ({ text })) };
     const story = id === 'narcl-mra' ? release : id === 'featured' ? featured : (all.find(s => s.id === id) || featured);
-    if (story !== release) Object.assign(story, { imgDisplay: 'block', hasBody: false, noBody: true, contact: 'Media contact: [media email]' });
+    if (story !== release) Object.assign(story, { imgDisplay: 'block', hasBody: false, noBody: true, contact: 'Media contact: Adfactors PR, Minakshi Hase, minakshi.hase@adfactorspr.com, 9819800294' });
     return {
       story,
       more: all.filter(s => s.id !== story.id).slice(0, 3).map(s => ({ ...s, href: 'NewsArticle.dc.html?id=' + s.id }))
