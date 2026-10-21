@@ -28,7 +28,7 @@ class Component extends DCLogic {
     const ease = 'cubic-bezier(.22,1,.36,1)', dur = '520ms';
     const tr = p => p.map(x => x + ' ' + dur + ' ' + ease).join(',');
     const ink = s || dark ? '#fff' : '#16295B';
-    const links = [['Who We Are', 'WhoWeAre'], ['Our Businesses', 'OurBusinesses'], ['Investors', 'Investors'], ['Newsroom', 'NewsAndMedia'], ['Careers', 'Careers'], ['Contact', 'Contact']];
+    const links = [['About Us', 'WhoWeAre'], ['Our Businesses', 'OurBusinesses'], ['Investors', 'Investors'], ['Newsroom', 'NewsAndMedia'], ['Careers', 'Careers'], ['Contact', 'Contact']];
     const header = h('header', { style: { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 60, display: 'flex', justifyContent: 'center', padding: s ? '24px 16px 0' : '14px 0 0', opacity: this.state.fade, visibility: this.state.fade <= 0 ? 'hidden' : 'visible', transition: tr(['padding']), pointerEvents: 'none' } },
       h('div', { style: { pointerEvents: 'auto', width: '100%', maxWidth: s ? this.state.pillW : 1560, height: s ? 52 : 80, padding: s ? '0 20px' : '0 clamp(24px,4vw,56px)', display: 'flex', alignItems: 'center', justifyContent: s ? 'center' : 'space-between', gap: s ? 22 : 24, borderRadius: s ? 100 : 0, background: s ? 'rgba(12,24,52,.7)' : 'rgba(12,24,52,0)', backdropFilter: s ? 'blur(16px)' : 'none', boxShadow: s ? '0 12px 32px rgba(9,17,38,.22)' : '0 0 0 rgba(0,0,0,0)', transition: tr(['max-width', 'height', 'padding', 'border-radius', 'background-color', 'box-shadow']) } },
         h('a', { href: 'BgrSite.dc.html', style: { display: 'flex', alignItems: 'center', fontFamily: "'Manrope',sans-serif", fontSize: 13, letterSpacing: '.14em', textTransform: 'uppercase', color: ink, whiteSpace: 'nowrap', transition: tr(['color']), flex: 'none' } },

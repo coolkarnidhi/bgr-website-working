@@ -37,7 +37,7 @@ class Component extends DCLogic {
     const m = a => a.map(([label, f]) => ({ label, href: f.startsWith('http') ? f : f.replace(/(#|$)/, '.dc.html$1') }));
     return {
       footerCols: [
-        { label: 'Who We Are', links: m([['Our Principles', 'WhoWeAre#purpose'], ['Our Story', 'OurStory'], ['Why BGR Wins', 'WhoWeAre#why-bgr-wins'], ['How We Build', 'WhoWeAre#how-we-build'], ['Leadership and Board', 'LeadershipAndBoard'], ['Track Record and EPC Capabilities', 'TrackRecord']]) },
+        { label: 'About Us', links: m([['Our Principles', 'WhoWeAre#purpose'], ['Our Story', 'OurStory'], ['Why BGR Wins', 'WhoWeAre#why-bgr-wins'], ['How We Build', 'WhoWeAre#how-we-build'], ['Leadership and Board', 'LeadershipAndBoard'], ['Track Record and EPC Capabilities', 'TrackRecord']]) },
         { label: 'Our Businesses', links: m([['Heat Transfer Products', 'HeatTransferProducts'], ['Digital & Engineering Services', 'EngineeringServices'], ['Nuclear BOP and Conventional Island', 'Nuclear']]) },
         { label: 'Investors', links: m([['Investor Relations home', 'Investors'], ['Financial Results', 'Investors'], ['Annual Reports', 'Investors'], ['Stock Exchange Filings', 'Investors'], ['Corporate Governance', 'Investors'], ['Investor Contact', 'Contact']]) },
         { label: 'Company', links: m([['News and Media', 'NewsAndMedia'], ['Careers', 'Careers'], ['Contact', 'Contact'], ['Suppliers', 'Suppliers'], ['Project Partners', 'ProjectPartners'], ['Employee Portal', 'EmployeePortal']]) }],
