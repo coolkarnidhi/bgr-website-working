@@ -73,16 +73,37 @@ class Component extends DCLogic {
     const old = b.fr, fr = document.createElement('iframe');
     fr.setAttribute('title', 'Business page'); fr.src = href;
     const EASE = 'cubic-bezier(.76,0,.24,1)', T = '700ms';
-    fr.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;z-index:56;background:#0C1834;transform:translateX(' + (dir * 100) + '%);pointer-events:none';
-    document.body.appendChild(fr);
+    fr.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;z-index:54;background:transparent;pointer-events:none';
+    document.body.insertBefore(fr, old);
     const t0 = performance.now(); let done = false;
+    // Only the page content slides; the header and the arrow / back buttons stay where they are.
+    const slidable = (d) => d ? [...d.querySelectorAll('.stage > *')].filter(e => !e.classList.contains('bnav') && !e.classList.contains('bback')) : [];
     const go = () => {
       if (done) return; done = true;
-      old.style.transition = 'transform ' + T + ' ' + EASE; fr.style.transition = 'transform ' + T + ' ' + EASE;
-      requestAnimationFrame(() => requestAnimationFrame(() => { old.style.transform = 'translateX(' + (-dir * 100) + '%)'; fr.style.transform = 'translateX(0)'; }));
+      const nd = fr.contentDocument, od = old.contentDocument;
+      // The outgoing page stays on top (its header and buttons stay put) and goes see-through so the incoming page shows beneath it.
+      const clear = 'html,body,x-dc,x-dc>div{background:transparent!important}';
+      const hold = nd.createElement('style');
+      hold.textContent = clear + 'header,.bnav,.bback{visibility:hidden!important}';
+      nd.head.appendChild(hold);
+      const holdOld = od.createElement('style'); holdOld.textContent = clear; od.head.appendChild(holdOld);
+      const inEls = slidable(nd), outEls = slidable(od);
+      inEls.forEach(e => { e.style.transform = 'translateX(' + (dir * 100) + '%)'; });
+      void fr.offsetWidth;
+      setTimeout(() => {
+        const tr = 'transform ' + T + ' ' + EASE;
+        inEls.concat(outEls).forEach(e => { e.style.transition = tr; });
+        outEls.forEach(e => { e.style.transform = 'translateX(' + (-dir * 100) + '%)'; });
+        inEls.forEach(e => { e.style.transform = 'translateX(0)'; });
+      }, 30);
       try { history.replaceState({ bizOpen: href }, '', href); } catch (x) {}
       this._biz = { fr: fr, ov: null, href: href };
-      setTimeout(() => { if (old.parentNode) old.parentNode.removeChild(old); fr.style.zIndex = '55'; fr.style.pointerEvents = 'auto'; this._swapping = false; }, 760);
+      setTimeout(() => {
+        if (old.parentNode) old.parentNode.removeChild(old);
+        inEls.forEach(e => { e.style.transition = ''; e.style.transform = ''; });
+        if (hold.parentNode) hold.parentNode.removeChild(hold);
+        fr.style.zIndex = '55'; fr.style.pointerEvents = 'auto'; this._swapping = false;
+      }, 790);
     };
     const poll = () => {
       try { const d = fr.contentDocument; if (d && d.readyState === 'complete' && d.querySelector('.stage') && d.querySelector('header')) { setTimeout(go, 200); return; } } catch (x) {}
