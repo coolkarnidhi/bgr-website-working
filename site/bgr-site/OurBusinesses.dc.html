@@ -88,22 +88,33 @@ class Component extends DCLogic {
       nd.head.appendChild(hold);
       const holdOld = od.createElement('style'); holdOld.textContent = clear; od.head.appendChild(holdOld);
       const inEls = slidable(nd), outEls = slidable(od);
-      inEls.forEach(e => { e.style.transform = 'translateX(' + (dir * 100) + '%)'; });
-      void fr.offsetWidth;
-      setTimeout(() => {
-        const tr = 'transform ' + T + ' ' + EASE;
-        inEls.concat(outEls).forEach(e => { e.style.transition = tr; });
-        outEls.forEach(e => { e.style.transform = 'translateX(' + (-dir * 100) + '%)'; });
-        inEls.forEach(e => { e.style.transform = 'translateX(0)'; });
-      }, 30);
+      // One animation loop moves both pages' content together, so they can never come apart.
+      const W = fr.clientWidth || window.innerWidth, DUR = 700;
+      const ease = p => p < .5 ? 8 * p * p * p * p : 1 - Math.pow(-2 * p + 2, 4) / 2;
+      const place = s => {
+        outEls.forEach(e => { e.style.transform = 'translateX(' + (-dir * s * W) + 'px)'; });
+        inEls.forEach(e => { e.style.transform = 'translateX(' + (dir * (1 - s) * W) + 'px)'; });
+      };
+      place(0);
       try { history.replaceState({ bizOpen: href }, '', href); } catch (x) {}
       this._biz = { fr: fr, ov: null, href: href };
-      setTimeout(() => {
+      let finished = false, t1 = null;
+      const finish = () => {
+        if (finished) return; finished = true;
         if (old.parentNode) old.parentNode.removeChild(old);
-        inEls.forEach(e => { e.style.transition = ''; e.style.transform = ''; });
+        inEls.forEach(e => { e.style.transform = ''; e.style.willChange = ''; });
         if (hold.parentNode) hold.parentNode.removeChild(hold);
         fr.style.zIndex = '55'; fr.style.pointerEvents = 'auto'; this._swapping = false;
-      }, 790);
+      };
+      const step = (now) => {
+        if (finished) return;
+        if (t1 === null) t1 = now;
+        const p = Math.min(1, (now - t1) / DUR);
+        place(ease(p));
+        if (p < 1) requestAnimationFrame(step); else finish();
+      };
+      requestAnimationFrame(step);
+      setTimeout(finish, DUR + 900);
     };
     const poll = () => {
       try { const d = fr.contentDocument; if (d && d.readyState === 'complete' && d.querySelector('.stage') && d.querySelector('header')) { setTimeout(go, 200); return; } } catch (x) {}
