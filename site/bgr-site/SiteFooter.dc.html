@@ -36,7 +36,7 @@ class Component extends DCLogic {
     const m = a => a.map(([label, f]) => ({ label, href: f.startsWith('http') ? f : f.replace(/(#|$)/, '.dc.html$1') }));
     return {
       footerCols: [
-        { label: 'About Us', links: m([['Who We Are', 'WhoWeAre'], ['Our Story', 'OurStory'], ['Leadership', 'LeadershipAndBoard'], ['Track Record', 'TrackRecord']]) },
+        { label: 'About Us', links: m([['Who We Are', 'WhoWeAre'], ['Our Story', 'OurStory'], ['Leadership', 'LeadershipAndBoard']]) },
         { label: 'Our Businesses', links: m([['BGR Cooling', 'HeatTransferProducts'], ['BGR Design & Engineering', 'EngineeringServices'], ['BGR Nuclear', 'Nuclear']]) },
         { label: 'Investors', links: m([['Latest News', 'Investors'], ['Archival Information', 'InvestorsArchive'], ['Governance & Disclosures', 'InvestorsShareholder']]) },
         { label: 'Company', links: m([['Careers', 'Careers'], ['Newsroom', 'NewsAndMedia'], ['Contact', 'Contact']]) }],
