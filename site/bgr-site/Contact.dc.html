@@ -35,10 +35,10 @@
 <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
 <form onSubmit="{{ onSubmit }}" style="flex:1;display:flex;flex-direction:column;gap:clamp(10px,1.8vh,16px)">
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(10px,1.8vh,16px)">
-<label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Name</span><input required name="name" style="border:1px solid #C7CBD9;border-radius:5px;padding:clamp(8px,1.3vh,11px) 14px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none"></label>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Name</span><input required name="name" style="border:1px solid {{ bdName }};border-radius:5px;padding:clamp(8px,1.3vh,11px) 14px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none"></label>
 <label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Organisation</span><input name="org" style="border:1px solid #C7CBD9;border-radius:5px;padding:clamp(8px,1.3vh,11px) 14px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none"></label>
 </div>
-<label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Email</span><input required type="email" name="email" style="border:1px solid #C7CBD9;border-radius:5px;padding:clamp(8px,1.3vh,11px) 14px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none"></label>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Email</span><input required type="email" name="email" style="border:1px solid {{ bdEmail }};border-radius:5px;padding:clamp(8px,1.3vh,11px) 14px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none"></label>
 <div style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Enquiry type</span>
 <div style="display:flex;gap:8px;flex-wrap:wrap">
 <sc-for list="{{ types }}" as="t" hint-placeholder-count="3">
@@ -48,8 +48,8 @@
 </div>
 <span style="font-size:12.5px;color:#8B94AD">{{ routeNote }}</span>
 </div>
-<label style="flex:1;display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Message</span><textarea required name="message" rows="3" style="flex:1;min-height:52px;resize:none;border:1px solid #C7CBD9;border-radius:5px;padding:clamp(8px,1.3vh,11px) 14px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none;resize:vertical"></textarea></label>
-<div style="display:flex;align-items:center;gap:14px 20px;flex-wrap:wrap"><label style="display:flex;align-items:center;gap:10px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">{{ captchaQuestion }}</span><input name="captcha" required inputmode="numeric" autocomplete="off" aria-label="{{ captchaLabel }}" style="width:68px;border:1px solid #C7CBD9;border-radius:5px;padding:clamp(8px,1.3vh,11px) 12px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none;text-align:center"></label><button type="submit" style="border:none;cursor:pointer;padding:14px 34px;border-radius:100px;background:#E41D26;color:#fff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;transition:background 200ms" style-hover="background:#16295B">Submit</button><span role="alert" style="font-size:12.5px;color:#C0151B">{{ captchaError }}</span></div><input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+<label style="flex:1;display:flex;flex-direction:column;gap:8px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">Message</span><textarea required name="message" rows="3" style="flex:1;min-height:52px;resize:none;border:1px solid {{ bdMessage }};border-radius:5px;padding:clamp(8px,1.3vh,11px) 14px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none;resize:vertical"></textarea></label>
+<div style="display:flex;align-items:center;gap:14px 20px;flex-wrap:wrap"><label style="display:flex;align-items:center;gap:10px"><span style="font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;color:#16295B">{{ captchaQuestion }}</span><input name="captcha" required inputmode="numeric" autocomplete="off" aria-label="{{ captchaLabel }}" style="width:68px;border:1px solid {{ bdCaptcha }};border-radius:5px;padding:clamp(8px,1.3vh,11px) 12px;font-family:'Inter',sans-serif;font-size:14px;color:#16295B;outline:none;text-align:center"></label><button type="submit" style="border:none;cursor:pointer;padding:14px 34px;border-radius:100px;background:#E41D26;color:#fff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;transition:background 200ms" style-hover="background:#16295B">Submit</button><span role="alert" style="font-size:12.5px;color:#C0151B;flex:1 1 120px;min-width:0">{{ formError }}</span></div><input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
 </form>
 </sc-if>
 <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
@@ -70,7 +70,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { type: 'Investor relations', sent: false, office: 0, a: 3 + Math.floor(Math.random() * 6), b: 2 + Math.floor(Math.random() * 7), wrong: false };
+  state = { type: 'Investor relations', sent: false, office: 0, a: 3 + Math.floor(Math.random() * 6), b: 2 + Math.floor(Math.random() * 7), errs: {}, msg: '' };
   renderVals() {
     const routes = { 'Investor relations': 'Routed to the investor relations team.', 'Media': 'Routed to the media team.', 'Careers': 'Routed to the careers team.', 'Products': 'Routed to the products team.', 'General': 'Routed to the BGR enquiries desk.', 'Design & engineering': 'Routed to the design and engineering services team.' };
     const OFF = [
@@ -89,13 +89,23 @@ class Component extends DCLogic {
       sentNote: 'Your ' + this.state.type.toLowerCase() + ' enquiry has been received. The team will reply by email.',
       captchaQuestion: 'What is ' + this.state.a + ' + ' + this.state.b + '?',
       captchaLabel: 'Anti-spam check: what is ' + this.state.a + ' plus ' + this.state.b + '?',
-      captchaError: this.state.wrong ? 'That answer is not right. Please try the new question.' : '',
-      // Front-end check only; the CMS must re-validate the answer and the empty "website" trap field on the server.
-      onSubmit: e => { e.preventDefault(); const f = e.target.elements; const next = { a: 3 + Math.floor(Math.random() * 6), b: 2 + Math.floor(Math.random() * 7) };
+      bdName: this.state.errs.name ? '#C0151B' : '#C7CBD9', bdEmail: this.state.errs.email ? '#C0151B' : '#C7CBD9', bdMessage: this.state.errs.message ? '#C0151B' : '#C7CBD9', bdCaptcha: this.state.errs.captcha ? '#C0151B' : '#C7CBD9',
+      formError: this.state.msg,
+      // Front-end checks only (the page runtime drops the "required" attribute, so every field is checked here); the CMS must repeat all of them, plus the sum and the empty "website" trap field, on the server.
+      onSubmit: e => { e.preventDefault(); const f = e.target.elements; const rnd = () => ({ a: 3 + Math.floor(Math.random() * 6), b: 2 + Math.floor(Math.random() * 7) });
         if (f.website && f.website.value) { this.setState({ sent: true }); return; }
-        if (parseInt(f.captcha.value, 10) !== this.state.a + this.state.b) { f.captcha.value = ''; this.setState({ wrong: true, ...next }); return; }
-        this.setState({ sent: true, wrong: false }); },
-      reset: () => this.setState({ sent: false, wrong: false, a: 3 + Math.floor(Math.random() * 6), b: 2 + Math.floor(Math.random() * 7) })
+        const name = f.name.value.trim(), email = f.email.value.trim(), message = f.message.value.trim(), cap = f.captcha.value.trim();
+        const sumRight = cap !== '' && parseInt(cap, 10) === this.state.a + this.state.b;
+        const errs = { name: !name, email: !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email), message: !message, captcha: !sumRight };
+        if (errs.name || errs.email || errs.message || errs.captcha) {
+          let msg;
+          if (errs.name || errs.message || (errs.email && !email)) msg = 'Fill in the highlighted fields.';
+          else if (errs.email) msg = 'Enter a valid email address.';
+          else msg = cap === '' ? 'Answer the sum first.' : 'Wrong answer, try this one.';
+          if (errs.captcha && cap !== '') { f.captcha.value = ''; this.setState({ errs, msg, ...rnd() }); } else this.setState({ errs, msg });
+          return; }
+        this.setState({ sent: true, errs: {}, msg: '' }); },
+      reset: () => this.setState({ sent: false, errs: {}, msg: '', a: 3 + Math.floor(Math.random() * 6), b: 2 + Math.floor(Math.random() * 7) })
     };
   }
 }
