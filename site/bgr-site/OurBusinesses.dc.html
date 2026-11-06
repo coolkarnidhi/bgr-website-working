@@ -200,7 +200,7 @@ class Component extends DCLogic {
       heroPrimary: { children: 'Investor Relations', href: 'Investors.dc.html' },
       heroSecondary: { children: 'Our Story', href: 'OurStory.dc.html' },
       heroCard: { href: 'Investors.dc.html', eyebrow: 'Latest news', label: '2026 Annual Report', image: { src: 'assets/dholpur4.jpg', alt: 'BGR project site' } },
-      navLinks: [{ label: 'Investors', href: 'Investors.dc.html' }, { label: 'News and Media', href: 'NewsAndMedia.dc.html' }, { label: 'Careers', href: 'Careers.dc.html' }],
+      navLinks: [{ label: 'Investors', href: 'Investors.dc.html' }, { label: 'News and Media', href: 'NewsAndMedia.dc.html' }],
       menus: [
         { label: 'About Us', columns: [
           { label: 'Who we are', links: [{ label: 'Our Principles', href: 'WhoWeAre.dc.html#purpose' }, { label: 'Our Story', href: 'OurStory.dc.html' }, { label: 'Why BGR Wins', href: 'WhoWeAre.dc.html#why-bgr-wins' }, { label: 'How We Build', href: 'WhoWeAre.dc.html#how-we-build' }] },
@@ -224,14 +224,13 @@ class Component extends DCLogic {
         { meta: '[DD Mon YYYY] · Company news', title: 'Headline of the most recent company story, two lines at most.' }],
       routes: [
         { title: 'Investors', description: 'Results, filings, governance, contacts', meta: 'P-300', href: 'Investors.dc.html' },
-        { title: 'Media', description: 'Releases, media kit, spokespeople', meta: 'P-400', href: 'NewsAndMedia.dc.html' },
-        { title: 'Careers', description: 'Open roles, life at BGR, graduates', meta: 'P-500', href: 'Careers.dc.html' }],
+        { title: 'Media', description: 'Releases, media kit, spokespeople', meta: 'P-400', href: 'NewsAndMedia.dc.html' }],
       clients: ['Bechtel', 'Siemens', 'Technip', 'Reliance', 'L&T', 'ONGC', 'Samsung Engineering', 'Hyundai Heavy', 'SNC-Lavalin', 'Petrofac', 'Weir', 'ADNOC', 'Foster Wheeler', 'Toyo Engineering', 'Uhde'],
       footerCols: [
         { label: 'About Us', links: [['Our Principles', 'WhoWeAre.dc.html#purpose'], ['Our Story', 'OurStory.dc.html'], ['Why BGR Wins', 'WhoWeAre.dc.html#why-bgr-wins'], ['How We Build', 'WhoWeAre.dc.html#how-we-build'], ['Leadership and Board', 'LeadershipAndBoard.dc.html']].map(([label, href]) => ({ label, href })) },
         { label: 'Our Businesses', links: [['Heat Transfer Products', 'HeatTransferProducts.dc.html'], ['Digital & Engineering Services', 'EngineeringServices.dc.html'], ['Nuclear BOP and Conventional Island', 'Nuclear.dc.html']].map(([label, href]) => ({ label, href })) },
         { label: 'Investors', links: ['Investor Relations home', 'Financial Results', 'Annual Reports', 'Stock Exchange Filings', 'Corporate Governance'].map(label => ({ label, href: 'Investors.dc.html' })).concat([{ label: 'Investor Contact', href: 'Contact.dc.html' }]) },
-        { label: 'Company', links: [['News and Media', 'NewsAndMedia.dc.html'], ['Careers', 'Careers.dc.html'], ['Contact', 'Contact.dc.html']].map(([label, href]) => ({ label, href })) }],
+        { label: 'Company', links: [['News and Media', 'NewsAndMedia.dc.html'], ['Contact', 'Contact.dc.html']].map(([label, href]) => ({ label, href })) }],
       legalLinks: [['Privacy Policy', 'Privacy.dc.html'], ['Terms of Use', 'Terms.dc.html'], ['Cookie Preferences', 'Cookies.dc.html'], ['Accessibility Statement', 'Accessibility.dc.html'], ['Disclaimer', 'Disclaimer.dc.html'], ['Sitemap', 'Sitemap.dc.html']].map(([label, href]) => ({ label, href }))
     };
   }
